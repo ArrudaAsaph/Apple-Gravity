@@ -27,6 +27,12 @@ def create_apple(apples, apples_rect):
     apples.append(apple)
     apples_rect.append(apple_rect)
 
+def cairobjeto(apples,apples_rect,altura,distancia):
+    aleatorio = random.randrange(10)
+    apples_rect[aleatorio].y += altura
+    return apples_rect[aleatorio].y
+    
+
 def create_apple_sky(apples, apples_rect):
     apple = pygame.image.load(("testes/maca.png"))
     apple = pygame.transform.scale(apple, (60, 70))
@@ -109,7 +115,7 @@ personagem_rect.y = 520
 # Variáveis de controle
 current_apple = 0
 sec = 0
-t = pygame.time.get_ticks()
+cronometro = pygame.time.get_ticks()
 apple_speed, personagem_speed = 2 , 6
 speed = 0
 
@@ -132,25 +138,26 @@ while True:
     personagem_rect, speed = mover_player(keys, personagem_rect, speed)
 
     # Mover a maçã atual para baixo
-    if current_apple < len(apples_rect):
-        apples_rect[current_apple].y += apple_speed
-        # Verifica se a maçã saiu da tela para passar à próxima
-        if apples_rect[current_apple].y > 720:
-            current_apple += 1
+    # if current_apple < len(apples_rect):
+    #     apples_rect[current_apple].y += apple_speed
+    #     # Verifica se a maçã saiu da tela para passar à próxima
+    #     if apples_rect[current_apple].y > 720:
+    #         current_apple += 1
+    cairobjeto(apples,apples_rect,50,10)
 
     # Verificar se o personagem capturou a maçã
     apples, apples_rect = capture_apples(apples, apples_rect, personagem_rect)
 
-    # Adicionar novas maçãs se necessário e se o tempo limite não for alcançado
-    if sec <= tempo_limite:
-        if len(apples) < 20:
-            if random.randrange(100) > 10:
-                create_apple(apples, apples_rect)
+    # # Adicionar novas maçãs se necessário e se o tempo limite não for alcançado
+    # if sec <= tempo_limite:
+    #     if len(apples) < 20:
+    #         if random.randrange(100) > 10:
+    #             create_apple(apples, apples_rect)
 
     # Cronômetro
-    if (pygame.time.get_ticks() - t) >= 1000:
+    if (pygame.time.get_ticks() - cronometro) >= 1000:
         sec += 1
-        t = pygame.time.get_ticks()
+        cronometro = pygame.time.get_ticks()
 
     # Desenhar fundo e todos os objetos
     display.blit(bg_image, (0, 0))

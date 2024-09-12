@@ -48,12 +48,13 @@ def capture_apples(apples, apples_rect, personagem_rect):
 
     return new_apples, new_apples_rect
 
-def tempo(apple_speed,personagem_speed, sec):
-    if sec < 15:
-        apple_speed=2    
-        personagem_speed = 7.5
 
-    elif 25 > sec >=15:
+# Controle do tempo e velocidade das maçãs
+def tempo(apple_speed, personagem_speed, sec):
+    if sec < 15:
+        apple_speed = 50   
+        personagem_speed = 7.5
+    elif 25 > sec >= 15:
         apple_speed = 2.5 
         personagem_speed = 8
     elif 35 > sec >= 25:
@@ -63,8 +64,22 @@ def tempo(apple_speed,personagem_speed, sec):
         apple_speed = 5
         personagem_speed = 9
 
-    return apple_speed , personagem_speed
+    return apple_speed, personagem_speed
 
+
+# Faz a maçã cair com base na velocidade
+def cair_maca(apples_rect, velocidade):
+    for i in range(len(apples_rect)):
+        apples_rect[i].y += velocidade
+
+
+# Controla a queda de uma nova maçã com base na posição da anterior
+def queda_das_macas(apples, apples_rect, velocidade, distancia):
+    cair_maca(apples_rect, velocidade)
+
+    # Quando a primeira maçã passa da "distancia", uma nova começa a cair
+    if apples_rect[0].y > distancia:
+        create_apple(apples, apples_rect)
 
 
 # Inicializar o display do jogo
@@ -73,7 +88,7 @@ display = game_start(1080, 720)
 # Criar as maçãs
 apples = []
 apples_rect = []
-for i in range(0, 10):
+for i in range(0, 2):  # Começa com 2 maçãs caindo
     create_apple(apples, apples_rect)
 
 # Imagem de fundo e personagem
@@ -86,16 +101,15 @@ personagem_rect.x = -30
 personagem_rect.y = 520
 
 # Variáveis de controle
-current_apple = 0
 sec = 0
 t = pygame.time.get_ticks()
-apple_speed, personagem_speed = 2 , 6
-
+apple_speed, personagem_speed = 50, 6
+distancia_proxima_maca = 720  # Distância no eixo y para lançar uma nova maçã
 
 # Loop principal do jogo
 while True:
     # Atualizar a velocidade das maçãs com base no tempo decorrido
-    apple_speed, personagem_speed = tempo(apple_speed,personagem_speed, sec)
+    apple_speed, personagem_speed = tempo(apple_speed, personagem_speed, sec)
     
     # Eventos do Pygame (sair do jogo)
     for event in pygame.event.get():
@@ -114,19 +128,15 @@ while True:
         if personagem_rect.right > 1200:
             personagem_rect.right = 1200
    
-    # Mover a maçã atual para baixo
-    if current_apple < len(apples_rect):
-        apples_rect[current_apple].y += apple_speed
-        # Verifica se a maçã saiu da tela para passar à próxima
-        if apples_rect[current_apple].y > 720:
-            current_apple += 1
+    # Controla a queda das maçãs e adiciona novas quando necessário
+    queda_das_macas(apples, apples_rect, 5, distancia_proxima_maca)
 
     # Verificar se o personagem capturou a maçã
     apples, apples_rect = capture_apples(apples, apples_rect, personagem_rect)
     
     # Adicionar novas maçãs se necessário
     if len(apples) < 20:
-        if random.randrange(100) > 10:
+        if random.randrange(100) > 90:  # Adiciona uma nova maçã com 10% de chance
             create_apple(apples, apples_rect)
 
     # Cronômetro
