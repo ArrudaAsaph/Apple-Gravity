@@ -1,0 +1,7 @@
+**** Apple Gravity ****
+
+Apple Gravity é um jogo criado por Asaph Bonifácio Guimarães Arruda, onde foi desenvolvido na linguagem de programação python.
+
+O jogo consiste em um boneco (NEWTON) que precisa ficar coletando as maçãs que caem da árvore, deixando o MÍNIMO de maçãs tocarem o chão, o jogo começa com a queda das maçãs lentamente, porém ao decorrer do tempo, além das maçãs aumentarem sua acelaração, assim caindo com mais velocidade, começa sugir as peras, que NÃO PODEM ser PEGAS pelo Personagem. Caso Newton pegue duas perâs, irá perder um coração de vida, e caso seus corações acabe é GAME OVER, além disso, se deixar mais de  maças cairem e não as pegarem, um coração de vida é retirado, porém, é possível recuperar as vidas não coletando maçãs sem deixar nenhuma atingir o chão, e caso o jogar passar de segundos e tiver apenas um coração de vida, irá cair uma maça dourada, que caso o jogado pegue, ele recupera imediatamente corações, e após 75 segundos além das frutas cairem cada vez mais rápido, começa a aparecer mini bonecos do Físico Einstein, que ao tocar Newton, retira um coração completo de sua vida, assim sendo necessário pular para não morrer.
+
+Contato: asapharruda@gmail.com
